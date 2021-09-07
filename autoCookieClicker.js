@@ -1,11 +1,16 @@
 if(AutoClicker === undefined) var AutoClicker = {};
-if(typeof CCSE == 'undefined') Game.LoadMod('https://klattmose.github.io/CookieClicker/CCSE.js');
+AutoClicker.name = 'AutoClicker';
+AutoClicker.version = '1.6';
+AutoClicker.GameVersion = '2.04';
 
 AutoClicker.launch = function(){
-  if(!AutoClicker.isLoaded){
-	AutoClicker.interval = setInterval(Game.ClickCookie, 100);
-  AutoClicker.isLoaded = 1;
-}
+  AutoClicker.init = function(){
+    AutoClicker.interval = setInterval(Game.ClickCookie, 100);
+    AutoClicker.isLoaded = 1;
+  }
+  if(CCSE.ConfirmGameVersion(AutoClicker.name, AutoClicker.version, AutoClicker.GameVersion)) {
+    Game.registerMod(AutoClicker.name, AutoClicker);
+  }
 }
 
 if(!AutoClicker.isLoaded){

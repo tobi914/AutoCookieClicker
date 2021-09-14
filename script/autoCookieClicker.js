@@ -1,8 +1,6 @@
 var AutoClicker = {}
 
 AutoClicker.init = function() {
-
-
   AutoClicker.OffColor = '#b52f18';
   AutoClicker.OnColor = '#63943e';
   AutoClicker.ButtonContainerColor = 'rgba(0, 0, 0, 0.4)';
@@ -77,8 +75,8 @@ AutoClicker.init = function() {
     statusTextEl.style.flexBasis = '20%'
     button.style.display = 'flex';
     button.style.padding = '0.5rem';
-    button.style.height = '3.25rem';
-    button.style.flexBasis = '45%';
+    button.style.height = '2rem';
+    button.style.flexBasis = '35%';
     button.style.justifyContent = 'space-between';
     button.style.marginBottom = '0.25rem';
     button.style.backgroundColor = AutoClicker.ButtonBackgroundColor;

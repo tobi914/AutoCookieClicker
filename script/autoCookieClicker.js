@@ -34,10 +34,10 @@ AutoClicker.init = function() {
 
   AutoClicker.ClickUpgrade = function() {
     if(!AutoClicker.AutoBuyMode) return;
-    var upgradeStore = document.getElementById('upgrade0');
+    var upgradeStore = document.getElementsByClassName('crate upgrade enabled').upgrade0;
     AutoClicker.dispatchEvent(upgradeStore, 'click');
-    var upgradeProduct = document.getElementById('product0');
-    AutoClicker.dispatchEvent(upgradeProduct, 'click');
+    // var upgradeProduct = document.getElementsByClassName('product unlocked enabled');
+    // AutoClicker.dispatchEvent(upgradeProduct, 'click');
   };
 
   AutoClicker.dispatchEvent = function(target, type) {
@@ -72,7 +72,7 @@ AutoClicker.init = function() {
 
   AutoClicker.UpgradeAutoClickCallback = function(event) {
     AutoClicker.AutoBuyMode = !AutoClicker.AutoBuyMode;
-    AutoClicker.setButtonStatus(AutoClicker.AutoUpgradeButton, AutoClicker.AutoBuyMode);
+    AutoClicker.setButtonStatus(AutoClicker.AutoBuyButton, AutoClicker.AutoBuyMode);
   }
 
   AutoClicker.setButtonProps = function(button, text, eventCallback) {

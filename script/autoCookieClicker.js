@@ -36,8 +36,6 @@ AutoClicker.init = function() {
     if(!AutoClicker.AutoBuyMode) return;
     var upgradeStore = document.getElementById('crate upgrade enabled').firstChild;
     AutoClicker.dispatchEvent(upgradeStore, 'click');
-    var upgradeProduct = document.getElementById('product unlocked enabled').firstChild;
-    AutoClicker.dispatchEvent(upgradeProduct, 'click');
   };
 
   AutoClicker.dispatchEvent = function(target, type) {

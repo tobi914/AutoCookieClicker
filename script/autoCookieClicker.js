@@ -11,6 +11,7 @@ AutoClicker.init = function() {
   AutoClicker.AutoClickMode = false;
   AutoClicker.GoldenClickMode = false;
   AutoClicker.FortuneClickMode = false;
+  AutoClicker.AutoBuyMode = false;
 
   AutoClicker.ClickCookie = function() {
     if(!AutoClicker.AutoClickMode) return;
@@ -30,6 +31,14 @@ AutoClicker.init = function() {
       Game.tickerL.click();
     }
   }
+
+  AutoClicker.ClickUpgrade = function() {
+    if(!AutoClicker.AutoBuyMode) return;
+    var upgradeStore = document.getElementById('crate upgrade enabled').firstChild;
+    AutoClicker.dispatchEvent(upgradeStore, 'click');
+    var upgradeProduct = document.getElementById('product unlocked enabled').firstChild;
+    AutoClicker.dispatchEvent(upgradeProduct, 'click');
+  };
 
   AutoClicker.dispatchEvent = function(target, type) {
     var e = document.createEvent('HTMLEvents');
@@ -59,6 +68,11 @@ AutoClicker.init = function() {
   AutoClicker.FortuneAutoClickCallback = function(event) {
     AutoClicker.FortuneClickMode = !AutoClicker.FortuneClickMode;
     AutoClicker.setButtonStatus(AutoClicker.AutoFortuneButton, AutoClicker.FortuneClickMode);
+  }
+
+  AutoClicker.UpgradeAutoClickCallback = function(event) {
+    AutoClicker.AutoBuyMode = !AutoClicker.AutoBuyMode;
+    AutoClicker.setButtonStatus(AutoClicker.AutoUpgradeButton, AutoClicker.AutoBuyMode);
   }
 
   AutoClicker.setButtonProps = function(button, text, eventCallback) {
@@ -108,15 +122,19 @@ AutoClicker.init = function() {
     AutoClicker.setButtonProps(autoGoldenButton, 'Auto golden', AutoClicker.GoldenAutoClickCallback);
     var autoFortuneButton = document.createElement('div');
     AutoClicker.setButtonProps(autoFortuneButton, 'Auto fortunes', AutoClicker.FortuneAutoClickCallback);
+    var autoBuyButton = document.createElement('div');
+    AutoClicker.setButtonProps(autoBuyButton, 'Auto buy', AutoClicker.UpgradeAutoClickCallback);
     container.appendChild(autoButton);
     container.appendChild(autoGoldenButton);
     container.appendChild(autoFortuneButton);
+    container.appendChild(autoBuyButton);
     var gameContainer = document.getElementById('sectionLeft')
     gameContainer.appendChild(container);
     AutoClicker.ButtonContainer = container;
     AutoClicker.AutoButton = autoButton;
     AutoClicker.AutoGoldenButton = autoGoldenButton;
     AutoClicker.AutoFortuneButton = autoFortuneButton;
+    AutoClicker.AutoBuyButton = autoBuyButton;
   };
 
   window.setTimeout(() => {
@@ -124,6 +142,7 @@ AutoClicker.init = function() {
     AutoClicker.AutoClickInterval = window.setInterval(AutoClicker.ClickCookie, 25);
     AutoClicker.GoldenClickInterval = window.setInterval(AutoClicker.ClickGoldenCookie, 25);
     AutoClicker.FortuneClickInterval = window.setInterval(AutoClicker.ClickFortune, 25);
+    AutoClicker.UpgradeClickInterval = window.setInterval(AutoClicker.ClickUpgrade, 25);
   }, 5000);
   Game.Notify(`AutoClicker mod loaded!`,'',[16,5]);
   AutoClicker.isLoaded = true;

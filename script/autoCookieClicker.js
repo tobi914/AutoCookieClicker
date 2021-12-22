@@ -38,6 +38,9 @@ AutoClicker.init = function() {
     AutoClicker.dispatchEvent(upgradeStore, 'click');
     // var upgradeProduct = document.getElementsByClassName('product unlocked enabled');
     // AutoClicker.dispatchEvent(upgradeProduct, 'click');
+    for (const upgradeProduct of document.getElementsByClassName("product unlocked enabled")){
+      AutoClicker.dispatchEvent(upgradeProduct, 'click');
+    }
   };
 
   AutoClicker.dispatchEvent = function(target, type) {

@@ -35,7 +35,7 @@ AutoClicker.init = function() {
 
   AutoClicker.ClickUpgrade = function() {
     if(!AutoClicker.AutoBuyMode) return;
-    var upgradeStore = document.getElementsByClassName('crate upgrade enabled').upgrade0;
+    var upgradeStore = document.getElementById('upgrades').getElementsByClassName('crate upgrade enabled')[0];
     AutoClicker.dispatchEvent(upgradeStore, 'click');
   };
 
@@ -46,6 +46,12 @@ AutoClicker.init = function() {
     for (const upgradeProduct of document.getElementsByClassName("product unlocked enabled")){
       AutoClicker.dispatchEvent(upgradeProduct, 'click');
     }
+  };
+
+  AutoClicker.ClickSpawnGolden = function() {
+    if(!AutoClicker.AutoSpawnGoldenMode) return;
+    var newShimmer = new Game.shimmer("golden");
+    newShimmer.spawnLead = 1;
   };
 
   AutoClicker.dispatchEvent = function(target, type) {
@@ -86,6 +92,11 @@ AutoClicker.init = function() {
   AutoClicker.ProductAutoClickCallback = function(event) {
     AutoClicker.AutoProductMode = !AutoClicker.AutoProductMode;
     AutoClicker.setButtonStatus(AutoClicker.AutoProductButton, AutoClicker.AutoProductMode);
+  }
+
+  AutoClicker.SpawnGoldenAutoClickCallback = function(event) {
+    AutoClicker.AutoSpawnGoldenMode = !AutoClicker.AutoSpawnGoldenMode;
+    AutoClicker.setButtonStatus(AutoClicker.AutoSpawnGoldenButton, AutoClicker.AutoSpawnGoldenMode);
   }
 
   AutoClicker.setButtonProps = function(button, text, eventCallback) {
@@ -137,11 +148,14 @@ AutoClicker.init = function() {
     AutoClicker.setButtonProps(autoBuyButton, 'Auto Upgrade', AutoClicker.UpgradeAutoClickCallback);
     var autoProductButton = document.createElement('div');
     AutoClicker.setButtonProps(autoProductButton, 'Auto Buildings', AutoClicker.ProductAutoClickCallback);
+    var autoSpawnGoldenButton = document.createElement('div');
+    AutoClicker.setButtonProps(autoSpawnGoldenButton, 'Spawn Golden (5 sec per)', AutoClicker.SpawnGoldenAutoClickCallback);
     container.appendChild(autoButton);
     container.appendChild(autoGoldenButton);
     container.appendChild(autoFortuneButton);
     container.appendChild(autoBuyButton);
     container.appendChild(autoProductButton);
+    container.appendChild(autoSpawnGoldenButton);
     var gameContainer = document.getElementById('sectionLeft')
     gameContainer.appendChild(container);
     AutoClicker.ButtonContainer = container;
@@ -150,6 +164,7 @@ AutoClicker.init = function() {
     AutoClicker.AutoFortuneButton = autoFortuneButton;
     AutoClicker.AutoBuyButton = autoBuyButton;
     AutoClicker.AutoProductButton = autoProductButton;
+    AutoClicker.AutoSpawnGoldenButton = autoSpawnGoldenButton;
   };
 
   window.setTimeout(() => {
@@ -159,6 +174,7 @@ AutoClicker.init = function() {
     AutoClicker.FortuneClickInterval = window.setInterval(AutoClicker.ClickFortune, 25);
     AutoClicker.UpgradeClickInterval = window.setInterval(AutoClicker.ClickUpgrade, 25);
     AutoClicker.ProductClickInterval = window.setInterval(AutoClicker.ClickProduct, 25);
+    AutoClicker.SpawnGoldenClickInterval = window.setInterval(AutoClicker.ClickSpawnGolden, 5000);
   }, 5000);
   Game.Notify(`AutoClicker mod loaded!`,'',[16,5]);
   AutoClicker.isLoaded = true;

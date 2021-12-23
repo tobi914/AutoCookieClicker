@@ -12,6 +12,7 @@ AutoClicker.init = function() {
   AutoClicker.GoldenClickMode = false;
   AutoClicker.FortuneClickMode = false;
   AutoClicker.AutoBuyMode = false;
+  AutoClicker.AutoProductMode = false;
 
   AutoClicker.ClickCookie = function() {
     if(!AutoClicker.AutoClickMode) return;
@@ -36,6 +37,10 @@ AutoClicker.init = function() {
     if(!AutoClicker.AutoBuyMode) return;
     var upgradeStore = document.getElementsByClassName('crate upgrade enabled').upgrade0;
     AutoClicker.dispatchEvent(upgradeStore, 'click');
+  };
+
+  AutoClicker.ClickProduct = function() {
+    if(!AutoClicker.AutoProductMode) return;
     // var upgradeProduct = document.getElementsByClassName('product unlocked enabled');
     // AutoClicker.dispatchEvent(upgradeProduct, 'click');
     for (const upgradeProduct of document.getElementsByClassName("product unlocked enabled")){
@@ -55,7 +60,7 @@ AutoClicker.init = function() {
     var statusTextEl = button.getElementsByClassName('status-text')[0];
     if(!statusTextEl) return;
     statusTextEl.style.backgroundColor = status ? AutoClicker.OnColor : AutoClicker.OffColor;
-      statusTextEl.innerHTML = status ? 'on' : 'off';
+      statusTextEl.innerHTML = status ? 'On' : 'Off';
   }
 
   AutoClicker.AutoClickCallback = function(event) {
@@ -78,6 +83,11 @@ AutoClicker.init = function() {
     AutoClicker.setButtonStatus(AutoClicker.AutoBuyButton, AutoClicker.AutoBuyMode);
   }
 
+  AutoClicker.ProductAutoClickCallback = function(event) {
+    AutoClicker.AutoProductMode = !AutoClicker.AutoProductMode;
+    AutoClicker.setButtonStatus(AutoClicker.AutoProductButton, AutoClicker.AutoProductMode);
+  }
+
   AutoClicker.setButtonProps = function(button, text, eventCallback) {
     var textEl = document.createElement('p');
     var statusTextEl = document.createElement('p');
@@ -85,7 +95,7 @@ AutoClicker.init = function() {
     textEl.style.margin = 'auto 0';
     //textEl.style.flexBasis = '60%';
     //textEl.style.flexBasis = '45%'
-    statusTextEl.innerHTML = 'off';
+    statusTextEl.innerHTML = 'Off';
     statusTextEl.className = 'status-text';
     statusTextEl.style.backgroundColor = AutoClicker.OffColor;
     statusTextEl.style.margin = 'auto 0';
@@ -94,10 +104,10 @@ AutoClicker.init = function() {
     statusTextEl.style.flexBasis = '20%'
     button.style.display = 'flex';
     button.style.padding = '0.5rem';
-    button.style.height = '3.25rem';
     button.style.flexBasis = '45%';
     button.style.justifyContent = 'space-between';
     button.style.marginBottom = '0.25rem';
+    button.style.marginTop = '0.25rem';
     button.style.backgroundColor = AutoClicker.ButtonBackgroundColor;
     button.style.cursor = 'pointer';
     button.addEventListener('click', eventCallback);
@@ -107,30 +117,31 @@ AutoClicker.init = function() {
 
   AutoClicker.createButtons = function() {
     var container = document.createElement('div');
-    container.style.padding = '1rem';
     container.style.backgroundColor = AutoClicker.ButtonContainerColor;
     container.style.position = 'absolute';
     container.style.display = 'flex';
     container.style.justifyContent = 'space-between'
     container.style.flexWrap = 'wrap';
-    container.style.top = '75%';
-    container.style.left = '15%';
-    container.style.right = '15%';
+    container.style.top = '55%';
+    container.style.left = '5%';
+    container.style.right = '5%';
     container.style.color = 'white';
-    container.style.zIndex = '9999';
-    container.style.border = '1px solid lightgray';
+    container.style.zIndex = '10001';
     var autoButton = document.createElement('div');
-    AutoClicker.setButtonProps(autoButton, 'Auto click', AutoClicker.AutoClickCallback);
+    AutoClicker.setButtonProps(autoButton, 'Auto Click', AutoClicker.AutoClickCallback);
     var autoGoldenButton = document.createElement('div');
-    AutoClicker.setButtonProps(autoGoldenButton, 'Auto golden', AutoClicker.GoldenAutoClickCallback);
+    AutoClicker.setButtonProps(autoGoldenButton, 'Auto Golden', AutoClicker.GoldenAutoClickCallback);
     var autoFortuneButton = document.createElement('div');
-    AutoClicker.setButtonProps(autoFortuneButton, 'Auto fortunes', AutoClicker.FortuneAutoClickCallback);
+    AutoClicker.setButtonProps(autoFortuneButton, 'Auto Fortunes', AutoClicker.FortuneAutoClickCallback);
     var autoBuyButton = document.createElement('div');
-    AutoClicker.setButtonProps(autoBuyButton, 'Auto buy', AutoClicker.UpgradeAutoClickCallback);
+    AutoClicker.setButtonProps(autoBuyButton, 'Auto Upgrade', AutoClicker.UpgradeAutoClickCallback);
+    var autoProductButton = document.createElement('div');
+    AutoClicker.setButtonProps(autoProductButton, 'Auto Buildings', AutoClicker.ProductAutoClickCallback);
     container.appendChild(autoButton);
     container.appendChild(autoGoldenButton);
     container.appendChild(autoFortuneButton);
     container.appendChild(autoBuyButton);
+    container.appendChild(autoProductButton);
     var gameContainer = document.getElementById('sectionLeft')
     gameContainer.appendChild(container);
     AutoClicker.ButtonContainer = container;
@@ -138,6 +149,7 @@ AutoClicker.init = function() {
     AutoClicker.AutoGoldenButton = autoGoldenButton;
     AutoClicker.AutoFortuneButton = autoFortuneButton;
     AutoClicker.AutoBuyButton = autoBuyButton;
+    AutoClicker.AutoProductButton = autoProductButton;
   };
 
   window.setTimeout(() => {
@@ -146,6 +158,7 @@ AutoClicker.init = function() {
     AutoClicker.GoldenClickInterval = window.setInterval(AutoClicker.ClickGoldenCookie, 25);
     AutoClicker.FortuneClickInterval = window.setInterval(AutoClicker.ClickFortune, 25);
     AutoClicker.UpgradeClickInterval = window.setInterval(AutoClicker.ClickUpgrade, 25);
+    AutoClicker.ProductClickInterval = window.setInterval(AutoClicker.ClickProduct, 25);
   }, 5000);
   Game.Notify(`AutoClicker mod loaded!`,'',[16,5]);
   AutoClicker.isLoaded = true;

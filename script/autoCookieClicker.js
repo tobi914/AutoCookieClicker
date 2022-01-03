@@ -41,8 +41,6 @@ AutoClicker.init = function() {
 
   AutoClicker.ClickProduct = function() {
     if(!AutoClicker.AutoProductMode) return;
-    // var upgradeProduct = document.getElementsByClassName('product unlocked enabled');
-    // AutoClicker.dispatchEvent(upgradeProduct, 'click');
     for (const upgradeProduct of document.getElementsByClassName("product unlocked enabled")){
       AutoClicker.dispatchEvent(upgradeProduct, 'click');
     }
@@ -149,7 +147,7 @@ AutoClicker.init = function() {
     var autoProductButton = document.createElement('div');
     AutoClicker.setButtonProps(autoProductButton, 'Auto Buildings', AutoClicker.ProductAutoClickCallback);
     var autoSpawnGoldenButton = document.createElement('div');
-    AutoClicker.setButtonProps(autoSpawnGoldenButton, 'Spawn Golden (5 sec per)', AutoClicker.SpawnGoldenAutoClickCallback);
+    AutoClicker.setButtonProps(autoSpawnGoldenButton, 'Spawn Golden (1 per/sec)', AutoClicker.SpawnGoldenAutoClickCallback);
     container.appendChild(autoButton);
     container.appendChild(autoGoldenButton);
     container.appendChild(autoFortuneButton);
@@ -174,7 +172,7 @@ AutoClicker.init = function() {
     AutoClicker.FortuneClickInterval = window.setInterval(AutoClicker.ClickFortune, 25);
     AutoClicker.UpgradeClickInterval = window.setInterval(AutoClicker.ClickUpgrade, 25);
     AutoClicker.ProductClickInterval = window.setInterval(AutoClicker.ClickProduct, 25);
-    AutoClicker.SpawnGoldenClickInterval = window.setInterval(AutoClicker.ClickSpawnGolden, 5000);
+    AutoClicker.SpawnGoldenClickInterval = window.setInterval(AutoClicker.ClickSpawnGolden, 1000);
   }, 5000);
   Game.Notify(`AutoClicker mod loaded!`,'',[16,5]);
   AutoClicker.isLoaded = true;
